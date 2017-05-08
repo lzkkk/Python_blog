@@ -14,15 +14,15 @@ import orm
 
 
 def init_jinja2(app, **kw):
-	logging.info('init jinja2...')
-	options = dict(
-    	autoescape = kw.get('autoescape', True),
+    logging.info('init jinja2...')
+    options = dict(
+        autoescape = kw.get('autoescape', True),
         block_start_string = kw.get('block_start_string', '{%'),
         block_end_string = kw.get('block_end_string', '%}'),
         variable_start_string = kw.get('variable_start_string', '{{'),
         variable_end_string = kw.get('variable_end_string', '}}'),
         auto_reload = kw.get('auto_reload', True)
-        )
+    )
     path = kw.get('path', None)
     if path is None:
         path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
@@ -37,7 +37,6 @@ def init_jinja2(app, **kw):
 async def logger_factory(app, handler):
     async def logger(request):
         logging.info('Request: %s %s' % (request.method, request.path))
-        # await asyncio.sleep(0.3)
         return (await handler(request))
     return logger
 
@@ -105,11 +104,15 @@ def datetime_filter(t):
     dt = datetime.fromtimestamp(t)
     return u'%s年%s月%s日' % (dt.year, dt.month, dt.day)
 
-@asyncio.coroutine
-def init(loop):
-    app = web.Application(loop=loop)
-    app.router.add_route('GET', '/', index)
-    srv = yield from loop.create_server(app.make_handler(), '127.0.0.1', 9000)
+async def init(loop):
+    await orm.create_pool(loop=loop, host='127.0.0.1', port=3306, user='www', password='www', db='awesome')
+    app = web.Application(loop=loop, middlewares=[
+        logger_factory, response_factory
+    ])
+    init_jinja2(app, filters=dict(datetime=datetime_filter))
+    add_routes(app, 'handlers')
+    add_static(app)
+    srv = await loop.create_server(app.make_handler(), '127.0.0.1', 9000)
     logging.info('server started at http://127.0.0.1:9000...')
     return srv
 

@@ -6,7 +6,7 @@ import asyncio,logging
 import aiomysql
 
 
-def log(sql, log()):
+def log(sql, args=()):
 	logging.info('SQL: %s' % sql)
 
 async def create_pool(loop, **kw):
@@ -100,7 +100,8 @@ class TextField(Field):
 
 
 class ModelMetaclass(type):
-	def __new__(cls, name, bases, attrs):
+
+    def __new__(cls, name, bases, attrs):
         if name=='Model':
             return type.__new__(cls, name, bases, attrs)
         tableName = attrs.get('__table__', None) or name
@@ -135,7 +136,8 @@ class ModelMetaclass(type):
         return type.__new__(cls, name, bases, attrs)
 
 class Model(dict, metaclass=ModelMetaclass):
-	def __init__(self, **kw):
+
+    def __init__(self, **kw):
         super(Model, self).__init__(**kw)
 
     def __getattr__(self, key):
