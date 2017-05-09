@@ -39,7 +39,7 @@ async def select(sql, args, size=None):
 		return rs
 
 async def execute(sql, args, autocommit=True):
-	log(sql)
+	log(sql, args)
 	async with __pool.get() as conn:
 		if not autocommit:
 			await conn.begin()
@@ -114,7 +114,7 @@ class ModelMetaclass(type):
                 logging.info('  found mapping: %s ==> %s' % (k, v))
                 mappings[k] = v
                 if v.primary_key:
-                    # 找到主键:
+                    # 找到主键 主键重复:
                     if primaryKey:
                         raise StandardError('Duplicate primary key for field: %s' % k)
                     primaryKey = k
@@ -135,7 +135,16 @@ class ModelMetaclass(type):
         attrs['__delete__'] = 'delete from `%s` where `%s`=?' % (tableName, primaryKey)
         return type.__new__(cls, name, bases, attrs)
 
-class Model(dict, metaclass=ModelMetaclass):
+# 定义ORM所有映射的基类：Model
+# Model类的任意子类可以映射一个数据库表
+# Model类可以看作是对所有数据库表操作的基本定义的映射
+#
+
+# 基于字典查询形式 
+# Model从dict继承 拥有自定的所有功能
+# 实现数据库操作的所有方法，定义为class方法，所有继承自Model都具有数据库操作方法
+
+ class Model(dict, metaclass=ModelMetaclass):
 
     def __init__(self, **kw):
         super(Model, self).__init__(**kw)
@@ -230,3 +239,5 @@ class Model(dict, metaclass=ModelMetaclass):
             logging.warn('failed to remove by primary key: affected rows: %s' % rows)
 
 
+
+if __name__ == '__main__':
