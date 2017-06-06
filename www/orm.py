@@ -18,7 +18,7 @@ async def create_pool(loop, **kw):
 		user=kw['user'],
 		password=kw['password'],
 		db=kw['db'],
-		charset=kw.get('charset', 'utf-8'),
+		charset=kw.get('charset', 'utf8'),
 		autocommit=kw.get('autocommit', True),
 		maxsize=kw.get('maxsize', 10),
 		minsize=kw.get('minsize', 1),
@@ -80,23 +80,23 @@ class StringField(Field):
 
 class BooleanField(Field):
 	def __init__ (self, name=None, default=False):
-		super.__init__(name, 'boolean', False, default)
+		super().__init__(name, 'boolean', False, default)
 
 
 class IntegerField(Field):
 	def __init__(self, name=None, primary_key=False, default = 0):
-		super.__init__(bame, 'bigint', primary_key, default)
+		super().__init__(bame, 'bigint', primary_key, default)
 
 
 
 class FloatField(Field):
 	def __init__(self, name=None, primary_key=False, default=0.0):
-		super.__init__(name, 'real', primary_key, default)
+		super().__init__(name, 'real', primary_key, default)
 
 
 class TextField(Field):
 	def __init__(self, name=None, default= None):
-		super.__init__(name, 'text', False, default)
+		super().__init__(name, 'text', False, default)
 
 
 class ModelMetaclass(type):
@@ -144,8 +144,7 @@ class ModelMetaclass(type):
 # Model从dict继承 拥有自定的所有功能
 # 实现数据库操作的所有方法，定义为class方法，所有继承自Model都具有数据库操作方法
 
- class Model(dict, metaclass=ModelMetaclass):
-
+class Model(dict, metaclass=ModelMetaclass):
     def __init__(self, **kw):
         super(Model, self).__init__(**kw)
 

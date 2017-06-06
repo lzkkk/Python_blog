@@ -3,6 +3,10 @@
 
 __author__ = 'lip.W'
 
+'''
+async web application.
+'''
+
 import logging; logging.basicConfig(level=logging.INFO)
 
 import asyncio, os, json, time
@@ -10,8 +14,9 @@ from datetime import datetime
 
 from aiohttp import web
 from jinja2 import Environment, FileSystemLoader
-import orm
 
+import orm
+from coroweb import add_routes, add_static
 
 def init_jinja2(app, **kw):
     logging.info('init jinja2...')
@@ -37,6 +42,7 @@ def init_jinja2(app, **kw):
 async def logger_factory(app, handler):
     async def logger(request):
         logging.info('Request: %s %s' % (request.method, request.path))
+        # await asyncio.sleep(0.3)
         return (await handler(request))
     return logger
 
@@ -90,7 +96,6 @@ async def response_factory(app, handler):
         return resp
     return response
 
-
 def datetime_filter(t):
     delta = int(time.time() - t)
     if delta < 60:
@@ -105,7 +110,7 @@ def datetime_filter(t):
     return u'%s年%s月%s日' % (dt.year, dt.month, dt.day)
 
 async def init(loop):
-    await orm.create_pool(loop=loop, host='127.0.0.1', port=3306, user='www', password='www', db='awesome')
+    await orm.create_pool(loop=loop, host='127.0.0.1', port=3306, user='www', password='www', db='python_blog')
     app = web.Application(loop=loop, middlewares=[
         logger_factory, response_factory
     ])
