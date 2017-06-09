@@ -32,6 +32,7 @@ def get_page_index(page_str):
         p = 1
     return p
 
+#加密cookie
 def user2cookie(user, max_age):
     '''
     Generate cookie str by user.
@@ -94,7 +95,8 @@ def index(request):
     ]
     return {
         '__template__': 'blogs.html',
-        'blogs': blogs
+        'blogs': blogs,
+        '__user__': request.user
     }
 
 @get('/api/blogs/{id}')
@@ -118,23 +120,24 @@ async def api_get_users():
         u.passwd = '******'
     return dict(users=users)
 
+
+
 _RE_EMAIL = re.compile(r'^[a-z0-9\.\-\_]+\@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+){1,4}$')
 _RE_SHA1 = re.compile(r'^[0-9a-f]{40}$')
-
 ########
 #登入
 ########
 @post('/api/authenticate')
 async def authenticate(*, email, passwd):
-	if not email or not email.strip():
-		raise APIValueError('eamil', 'email cantnot be empty')
-	if not passwd or not passwd.strip():
-		raise APIValueError('passwd', 'passwd cannot be empty')
-	users = await User.findAll('email', [email])
-	if len(users) == 0:
-		raise APIValueError('email', 'email is not exists')
-	user = users[0]
-	# check passwd:
+    if not email:
+        raise APIValueError('email', 'Invalid email.')
+    if not passwd:
+        raise APIValueError('passwd', 'Invalid password.')
+    users = await User.findAll('email=?', [email])
+    if len(users) == 0:
+        raise APIValueError('email', 'Email not exist.')
+    user = users[0]
+    # check passwd:
     sha1 = hashlib.sha1()
     sha1.update(user.id.encode('utf-8'))
     sha1.update(b':')
@@ -152,7 +155,7 @@ async def authenticate(*, email, passwd):
 ########
 #登出
 ########
-@get('signout')
+@get('/signout')
 def signout(request):
     referer = request.headers.get('Referer')
     r = web.HTTPFound(referer or '/')
