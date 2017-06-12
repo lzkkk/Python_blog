@@ -10,7 +10,7 @@ import re, time, json, logging, hashlib, base64, asyncio
 from coroweb import get, post
 from models import User, Comment, Blog, next_id
 from aiohttp import web
-from apis import APIValueError, APIResourceNotFoundError, APIError, APIPermissionError
+from apis import APIValueError, APIResourceNotFoundError, APIError, APIPermissionError, Page
 from models import User, Comment, Blog, next_id
 from config import configs
 import markdown2
@@ -95,8 +95,7 @@ def index(request):
     ]
     return {
         '__template__': 'blogs.html',
-        'blogs': blogs,
-        '__user__': request.user
+        'blogs': blogs
     }
 
 @get('/api/blogs/{id}')
@@ -112,6 +111,13 @@ def manage_create_blog():
         'action': '/api/blogs'
     }
 
+@get('/manage/blogs')
+def manager_blogs(*, page='1'):
+    return {
+        '__template__': 'manage_blogs.html',
+        'page_index': get_page_index(page)
+    }
+
 
 @get('/api/users')
 async def api_get_users():
@@ -119,6 +125,7 @@ async def api_get_users():
     for u in users:
         u.passwd = '******'
     return dict(users=users)
+
 
 
 
@@ -189,6 +196,18 @@ async def api_register_user(*, email, name, passwd):
     r.body = json.dumps(user, ensure_ascii=False).encode('utf-8')
     return r
 
+########
+#查询博客
+########
+@get('/api/blogs')
+async def api_blogs(*, page = '1'):
+    page_index = get_page_index(page)
+    num = await Blog.findNumber('count(id)')
+    p = Page(num, page_index)
+    if num == 0:
+        return dict(page=p, blogs=())
+    blogs = await Blog.findAll(orderBy='created_at desc', limit=(p.offset, p.limit))
+    return dict(page=p, blogs=blogs)
 
 ########
 #创建博客
