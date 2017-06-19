@@ -20,7 +20,10 @@ _COOKIE_KEY = configs.session.secret
 
 def check_admin(request):
     if request.__user__ is None or not request.__user__.admin:
+        logging.info("1111111")
         raise APIPermissionError()
+    else:
+        logging.info("管理员")
 
 def get_page_index(page_str):
     p = 1
@@ -86,22 +89,22 @@ def signin():
     }
 
 @get('/')
-def index(request):
-    summary = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-    blogs = [
-        Blog(id='1', name='Test Blog', summary=summary, created_at=time.time()-120),
-        Blog(id='2', name='Something New', summary=summary, created_at=time.time()-3600),
-        Blog(id='3', name='Learn Swift', summary=summary, created_at=time.time()-7200)
-    ]
+async def index(*, page='1'):
+    page_index = get_page_index(page)
+    num = await Blog.findNumber(page_index)
+    page = Page(num)
+    if num == 0:
+        blogs = []
+    else:
+        blogs = await Blog.findAll(orderBy='created_at desc', limit=(page.offset, page.limit))
+    
     return {
         '__template__': 'blogs.html',
+        'page': page,
         'blogs': blogs
     }
 
-@get('/api/blogs/{id}')
-async def api_get_blog(*, id):
-    blog = await Blog.find(id)
-    return blog
+
 
 @get('/manage/blogs/create')
 def manage_create_blog():
@@ -209,6 +212,11 @@ async def api_blogs(*, page = '1'):
     blogs = await Blog.findAll(orderBy='created_at desc', limit=(p.offset, p.limit))
     return dict(page=p, blogs=blogs)
 
+@get('/api/blogs/{id}')
+async def api_get_blog(*, id):
+    blog = await Blog.find(id)
+    return blog
+
 ########
 #创建博客
 ########
@@ -224,3 +232,32 @@ async def api_create_blog(request, *, name, summary, content):
 	blog = Blog(user_id=request.__user__.id, user_name=request.__user__.name, user_image=request.__user__.image, name=name.strip(), summary=summary.strip(), content=content.strip())
 	await blog.save()
 	return blog
+
+########
+#更新博客
+########
+@post('/api/blogs/{id}')
+async def api_update_blog(id, request, *, name, summary, content):
+    check_admin(request)
+    blog = await Blog.find(id)
+    if not name or not name.strip():
+        raise APIValueError('name', 'Name cannot be empty')
+    if not summary or not summary.strip():
+        raise APIValueError('summary', 'Summary cannot be empty')
+    if not content or not content.strip():
+        raise APIValueError('content', 'Content cannot be empty')
+    blog.name = name.strip()
+    blog.summary = summary.strip()
+    blog.content = content.strip()
+    await blog.update()
+    return blog
+
+########
+#删除博客
+########
+@post('/api/blogs/{id}/delete')
+async def api_delete_blog(request, *, id):
+    check_admin(request)
+    blog = await Blog.find(id)
+    await blog.remove()
+    return dict(id=id)
