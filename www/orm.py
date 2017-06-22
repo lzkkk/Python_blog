@@ -7,7 +7,7 @@ import aiomysql
 
 
 def log(sql, args=()):
-	logging.info('SQL: %s' % sql
+	logging.info('SQL: %s' % sql)
 
 @asyncio.coroutine
 def destory_pool(): #销毁连接池
