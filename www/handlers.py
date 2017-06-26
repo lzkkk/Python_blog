@@ -91,7 +91,7 @@ def signin():
 @get('/')
 async def index(*, page='1'):
     page_index = get_page_index(page)
-    num = await Blog.findNumber(page_index)
+    num = await Blog.findNumber('count(id)')
     page = Page(num)
     if num == 0:
         blogs = []
