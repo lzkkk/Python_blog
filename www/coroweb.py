@@ -3,8 +3,6 @@
 
 __author__ = 'lip.W'
 
-__author__ = 'Michael Liao'
-
 import asyncio, os, inspect, logging, functools
 
 from urllib import parse
