@@ -20,8 +20,11 @@ _COOKIE_KEY = configs.session.secret
 
 def check_admin(request):
     if request.__user__ is None or not request.__user__.admin:
+        logging.info(request.__user__.admin)
         raise APIPermissionError()
-
+    else:
+        loggin.info('I\'m a admin')
+        
 def get_page_index(page_str):
     p = 1
     try:
@@ -102,9 +105,9 @@ async def index(*, page='1'):
     }
 
 @get('/blog/{id}')
-def get_blog(id):
-    blog = yield from Blog.find(id)
-    comments = yield from Comment.findAll('blog_id=?', [id], orderBy='created_at desc')
+async def get_blog(id):
+    blog = await Blog.find(id)
+    comments = await Comment.findAll('blog_id=?', [id], orderBy='created_at desc')
     for c in comments:
         c.html_content = text2html(c.content)
     blog.html_content = markdown2.markdown(blog.content)
@@ -223,7 +226,9 @@ async def api_comments(*, page = '1'):
 #评论
 ########
 @post ('/api/blogs/{id}/comments')
+
 async def api_create_comment(id, request, *, comment):
+    logging.info('comment will be save')
     user = request.__user__
     if user is None:
         raise APIPermissionError('Please signin first.')
@@ -234,6 +239,7 @@ async def api_create_comment(id, request, *, comment):
         raise APIResourceNotFoundError('Blog')
     comment = Comment(blog_id = blog.id, user_id = user.id, user_name = user.name, user_image=user.image, content = content.strip())
     await comment.save()
+    logging.info('comment be save')
     return comment
 
 

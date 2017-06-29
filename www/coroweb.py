@@ -156,6 +156,7 @@ def add_route(app, fn):
     app.router.add_route(method, path, RequestHandler(app, fn))
 
 def add_routes(app, module_name):
+    logging.info('INFO：add_routes module_name: %s' % module_name)
     n = module_name.rfind('.')
     if n == (-1):
         mod = __import__(module_name, globals(), locals())
