@@ -20,10 +20,7 @@ _COOKIE_KEY = configs.session.secret
 
 def check_admin(request):
     if request.__user__ is None or not request.__user__.admin:
-        logging.info(request.__user__.admin)
         raise APIPermissionError()
-    else:
-        loggin.info('I\'m a admin')
         
 def get_page_index(page_str):
     p = 1
@@ -226,13 +223,11 @@ async def api_comments(*, page = '1'):
 #评论
 ########
 @post ('/api/blogs/{id}/comments')
-
-async def api_create_comment(id, request, *, comment):
-    logging.info('comment will be save')
+async def api_create_comment(id, request, *, content):
     user = request.__user__
     if user is None:
         raise APIPermissionError('Please signin first.')
-    if not cotent or not content.strip():
+    if not content or not content.strip():
         raise APIValueError('content')
     blog = await Blog.find(id)
     if blog is None:

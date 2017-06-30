@@ -13,7 +13,7 @@
 		var vm = new Vue({
 			el: '#vm',
 			data:blog,
-			method:{
+			methods:{
 				submit: function (event) {
 					event.preventDefault();
 					var $form = $('#vm').find('form');
@@ -22,7 +22,7 @@
 							$form.showFormError(err);
 						} 
 						else{
-							return location.assign('/api/blogs/' + r.id);
+							return location.assign('/manage/blogs');
 						}
 					});
 				}
@@ -74,7 +74,7 @@
     </div>
 
     <div id="loading" class="uk-width-1-1 uk-text-center">
-        <span><i class="uk-icon-spinner uk-icon-medium uk-icon-spin"></i> 正在加载...</span>
+        <span><i class="uk-icon-spinner uk-icon-medium uk-icon-spin"></i>正在加载...</span>
     </div>
 
     <div id="vm" class="uk-width-2-3">
