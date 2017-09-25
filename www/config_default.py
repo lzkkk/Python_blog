@@ -18,5 +18,4 @@ configs = {
 	'session':{
 		'secret':'Awesome'
 	}
-
 }
