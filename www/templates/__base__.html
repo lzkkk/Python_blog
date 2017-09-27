@@ -25,7 +25,6 @@
         <link rel='stylesheet' href='/static/css/uikit.min.css'>
         <link rel="stylesheet" href="/static/css/uikit.min.css">
         <link rel="stylesheet" href="/static/css/awesome.css">
-        <link rel="stylesheet" href="/static/css/index.css" />
         <link rel="stylesheet" href="/static/css/base.css" />
         <link rel="stylesheet" href="/static/css/main.css" />
     	<script src="/static/js/jquery.min.js"></script>
@@ -40,20 +39,8 @@
     	{% block beforehead %} <!-- block beforehead --> {% endblock %}
     </head>
     <body>
-        <div id="wrapper">
         <header>
-            <div class="headtop"></div>
-            <div class="contenttop">
-            <div class="logo f_l">草帽小子</div>
-            <div class="search f_r">
-                <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
-                    <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字'}" type="text">
-                    <input name="show" value="title" type="hidden">
-                    <input name="tempid" value="1" type="hidden">
-                    <input name="tbname" value="news" type="hidden">
-                    <input name="Submit" class="input_submit" value="搜索" type="submit">
-                </form>
-            </div>
+            <div class="lip_container_center">草帽小子</div>
         </header>
     <div class="uk-container uk-container-center">
         <div class="uk-grid">
@@ -65,14 +52,10 @@
     </div>
         <footer>
             <div class="footer">
-                <div class="f_l">
                     <p>Copyright &copy; 2017 草帽小子的程序世界. All rights reserved. 备案号 Theme by lip.W</p>
-                </div>
-                <div class="f_r textr">
-                    <p>Design by DanceSmile</p>
-                </div>
             </div>
         </footer>
     </div>
     </body>
+
 </html>
