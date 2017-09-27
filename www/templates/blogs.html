@@ -13,7 +13,7 @@
   <div class="blogList">
     {% for blog in blogs %}
       <article class="uk-article">
-        <h2><a href="/blog/{{ blog.id }}">{{ blog.created_at|datetime }}{{ blog.name }}{{ blog.summary }} </a></h2>
+        <h2><a href="/blog/{{ blog.id }}"><p class=''>{{ blog.created_at|datetime }}{{ blog.name }}{{ blog.summary }} </a></h2>
       </article>
       <hr class="uk-article-divider">
     {% endfor %}
