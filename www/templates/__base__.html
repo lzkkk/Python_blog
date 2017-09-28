@@ -27,6 +27,7 @@
         <link rel="stylesheet" href="/static/css/awesome.css">
         <link rel="stylesheet" href="/static/css/base.css" />
         <link rel="stylesheet" href="/static/css/main.css" />
+        <link rel="stylesheet" href="/static/css/fonts.css"/>
     	<script src="/static/js/jquery.min.js"></script>
     	<script src="/static/js/sha1.min.js"></script>
     	<script src="/static/js/uikit.min.js"></script>
@@ -38,24 +39,29 @@
         <meta name="description" content="草帽小子" />
     	{% block beforehead %} <!-- block beforehead --> {% endblock %}
     </head>
+
     <body>
         <header>
-            <div class="lip_container_center">草帽小子</div>
+            <div class="lip_container_center"><a>草帽小子</a></div>
+            <p class='headerImageContainer'>
+                <a href="https://www.baidu.com" target='_blank'>
+                    <img class='themeImg' src="../static/img/github.png"> 
+                </a>
+                <a href="https://www.baidu.com" target='_blank'>
+                    <img class='themeImg' src="../static/img/twitter.png"> 
+                </a>
+                <a href="https://www.baidu.com" target='_blank'>
+                    <img class='themeImg' src="../static/img/github.png" href="https://www.baidu.com">
+                </a>
+            </p>
         </header>
-    <div class="uk-container uk-container-center">
-        <div class="uk-grid">
-            <!-- content -->
+             <div class="headSpace"></div>
             {% block content %}
             {% endblock %}
-            <!-- // content -->
-        </div>
-    </div>
         <footer>
             <div class="footer">
                     <p>Copyright &copy; 2017 草帽小子的程序世界. All rights reserved. 备案号 Theme by lip.W</p>
             </div>
         </footer>
-    </div>
     </body>
-
 </html>

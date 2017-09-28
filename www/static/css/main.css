@@ -4,7 +4,27 @@
 	margin-left:auto;
 	margin-right:auto;
 	text-align: center;
-	font: 24px "宋体", Arial, Helvetica, sans-serif;
+	font: 24px "Montserrat", "Helvetica Neue", "Hiragino Sans GB", "LiHei Pro", Arial, sans-serif;
+}
+
+.themeImg {
+	margin-top: 10px;
+	margin-right: 5px;
+	margin-left: 5px;
+	width: 15px;
+	height: 15px;
+}
+
+.headSpace{
+	margin-top: 60px;	
+}
+
+.headerImageContainer {
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	display:flex;
+	justify-content:center;
 }
 
 .backgroudColor {
@@ -12,6 +32,24 @@
 }
 
 .blogList {
-	margin: auto;
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
 	width: 600px;
 }
+
+.blogSummary {
+	margin-left: 10px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font: 24px "宋体", Arial, Helvetica, sans-serif;
+	color: rgb(52,52,52);
+}
+
+.blogCreate_at {
+	margin-left: 0px;
+	margin-top: 20px;
+	font: 15px "Montserrat", "Helvetica Neue", "Hiragino Sans GB", "LiHei Pro", Arial, sans-serif;
+	color: rgb(135,135,135);
+}
+

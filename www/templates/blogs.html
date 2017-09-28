@@ -8,16 +8,17 @@
 {% endblock %}
 
 {% block content %}
-  <div class="jztop"></div>
-  <div class="container">
   <div class="blogList">
     {% for blog in blogs %}
-      <article class="uk-article">
-        <h2><a href="/blog/{{ blog.id }}"><p class=''>{{ blog.created_at|datetime }}{{ blog.name }}{{ blog.summary }} </a></h2>
-      </article>
+      <h2>
+        <p class='blogCreate_at'>
+          {{ blog.created_at|datetime }} 
+          <a class='blogSummary' href="/blog/{{ blog.id }}">
+            {{ blog.name }}{{ blog.summary }}
+          </a> 
+        </p>   
+      </h2>
       <hr class="uk-article-divider">
     {% endfor %}
   </div>
-  </div>
-
 {% endblock %}

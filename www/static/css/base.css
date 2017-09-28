@@ -4,21 +4,32 @@
 	margin: 0;
 	padding: 0
 }
+
 body {
 	font: 12px "宋体", Arial, Helvetica, sans-serif;
 	color: #666666;
-	background: #fff
+	background: #fff;
 }
+
 img {
 	border: 0;
 	display: block
 }
-ul, ol, li {
+
+ul, 
+ol, 
+li {
 	list-style: none;
 }
-h1, h2, h3, h4, h5, h6 {
-	font-size: 100%;
-	font-weight: normal;
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6 {
+	font-family: "Montserrat", "Helvetica Neue", "Hiragino Sans GB", "LiHei Pro", Arial, sans-serif;
+    font-weight: 400;
 }
 
 a {
@@ -26,23 +37,37 @@ a {
 }
 
 /* 默认链接颜色 */
-a:link, a:visited, a:active {
+a:link,a:visited,a:active {
 	text-decoration: none;
 	color: #000000
 }
+
 a:hover {
 	text-decoration: none;
-	color: #000;
+	color: red;
 }
 
 header {
 	width: 100%;
+	margin-left: auto;
+	margin-right: auto
 }
+
+.header a:link,a:visited,a:active {
+	text-decoration: none;
+	color: #000000
+}
+
+.header a:hover {
+	text-decoration: none;
+	color: #000000
+}
+
 /*footer*/
 footer {
 	padding: 20px 0;
 	color: #ccc;
-	margin: 20px 0 0 0
+	margin: 0 0 0 0
 }
 
 .footer a {
@@ -58,4 +83,8 @@ footer {
 .footer p {
 	line-height: 24px;
 	text-align: center;
+}
+
+hr {
+	color: rgb(224,224,224);
 }
