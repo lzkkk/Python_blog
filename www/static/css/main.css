@@ -7,6 +7,8 @@
 	font: 24px "Montserrat", "Helvetica Neue", "Hiragino Sans GB", "LiHei Pro", Arial, sans-serif;
 }
 
+.center {text-align: center}
+
 .themeImg {
 	margin-top: 10px;
 	margin-right: 5px;
@@ -35,7 +37,7 @@
 	margin-top: 20px;
 	margin-left: auto;
 	margin-right: auto;
-	width: 600px;
+	width: 61.8%;
 }
 
 .blogSummary {
@@ -49,7 +51,7 @@
 .blogCreate_at {
 	margin-left: 0px;
 	margin-top: 20px;
-	font: 15px "Montserrat", "Helvetica Neue", "Hiragino Sans GB", "LiHei Pro", Arial, sans-serif;
+	font: 14px "Montserrat", "Helvetica Neue", "Hiragino Sans GB", "LiHei Pro", Arial, sans-serif;
 	color: rgb(135,135,135);
 }
 

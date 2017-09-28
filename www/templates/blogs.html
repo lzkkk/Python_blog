@@ -12,7 +12,7 @@
     {% for blog in blogs %}
       <h2>
         <p class='blogCreate_at'>
-          {{ blog.created_at|datetime }} 
+          {{blog.created_at|datetime}}
           <a class='blogSummary' href="/blog/{{ blog.id }}">
             {{ blog.name }}{{ blog.summary }}
           </a> 
