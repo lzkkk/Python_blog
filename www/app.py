@@ -126,7 +126,7 @@ def datetime_filter(t):
     if delta < 604800:
         return u'%s天前' % (delta // 86400)
     dt = datetime.fromtimestamp(t)
-    return dt.strftime("%B %d,%Y")
+    return dt.strftime("%B  %d, %Y")
 
 
 async def init(loop):

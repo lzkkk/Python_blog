@@ -223,20 +223,20 @@ async def api_comments(*, page = '1'):
 #评论
 ########
 @post ('/api/blogs/{id}/comments')
-async def api_create_comment(id, request, *, content):
-    user = request.__user__
-    if user is None:
-        raise APIPermissionError('Please signin first.')
+async def api_create_comment(id, request, *, content, email, nickname):
     if not content or not content.strip():
         raise APIValueError('content')
+    if not email or not email.strip():
+        raise APIValueError('email')
+    if not nickname or not nickname.strip():
+        raise APIValueError('nickname')
     blog = await Blog.find(id)
     if blog is None:
         raise APIResourceNotFoundError('Blog')
-    comment = Comment(blog_id = blog.id, user_id = user.id, user_name = user.name, user_image=user.image, content = content.strip())
+    comment = Comment(blog_id = blog.id, nickname = nickname.strip(), email = email.strip(), content = content.strip())
     await comment.save()
     logging.info('comment be save')
     return comment
-
 
 ########
 #管理评论
@@ -299,15 +299,13 @@ async def api_get_blog(*, id):
 #创建博客
 ########
 @post('/api/blogs')
-async def api_create_blog(request, *, name, summary, content):
+async def api_create_blog(request, *, name, content):
 	check_admin(request)
 	if not name or not name.strip():
 		raise APIValueError('name', 'name cannot be empty')
-	if not summary or not summary.strip():
-		raise APIValueError('summary', 'summary cannot be empty')
 	if not content or not content.strip():
 		raise APIValueError('content', 'content cannot be empty')
-	blog = Blog(user_id=request.__user__.id, user_name=request.__user__.name, user_image=request.__user__.image, name=name.strip(), summary=summary.strip(), content=content.strip())
+	blog = Blog(user_id=request.__user__.id, user_name=request.__user__.name, user_image=request.__user__.image, name=name.strip(), content=content.strip())
 	await blog.save()
 	return blog
 
@@ -315,17 +313,14 @@ async def api_create_blog(request, *, name, summary, content):
 #更新博客
 ########
 @post('/api/blogs/{id}')
-async def api_update_blog(id, request, *, name, summary, content):
+async def api_update_blog(id, request, *, name, content):
     check_admin(request)
     blog = await Blog.find(id)
     if not name or not name.strip():
         raise APIValueError('name', 'Name cannot be empty')
-    if not summary or not summary.strip():
-        raise APIValueError('summary', 'Summary cannot be empty')
     if not content or not content.strip():
         raise APIValueError('content', 'Content cannot be empty')
     blog.name = name.strip()
-    blog.summary = summary.strip()
     blog.content = content.strip()
     await blog.update()
     return blog

@@ -27,18 +27,14 @@
 {% endblock %}
 
 {% block content %}
-	<div class="uk-width-medium-3-4">
-        <article class="uk-article">
-            <h2>{{ blog.name }}</h2>
-            <p class="uk-article-meta">发表于{{ blog.created_at|datetime }}</p>
-            <p>{{ blog.html_content|safe }}</p>
-        </article>
-
-        <hr class="uk-article-divider">
-
+    <div class="post">
+        <h3 class="date">{{ blog.created_at|datetime }}</h3>
+        <h1>{{ blog.name }}</h1>
+        <p>{{ blog.html_content|safe }}</p>
+        <div class="content" v-html="post.content"> </div>
+        <hr/>
     {% if __user__ %}
         <h3>发表评论</h3>
-
         <article class="uk-comment">
             <header class="uk-comment-header">
                 <img class="uk-comment-avatar uk-border-circle" width="50" height="50" src="{{ __user__.image }}">
@@ -46,7 +42,14 @@
             </header>
             <div class="uk-comment-body">
                 <form id="form-comment" class="uk-form">
+
                     <div class="uk-alert uk-alert-danger uk-hidden"></div>
+                    <div class="uk-form-row">
+                        <textarea rows="1" placeholder="昵称" style="width:100%;resize:none;"></textarea>
+                    </div>
+                    <div class="uk-form-row">
+                        <textarea rows="1" placeholder="邮箱" style="width:100%;resize:none;"></textarea>
+                    </div>
                     <div class="uk-form-row">
                         <textarea rows="6" placeholder="说点什么吧" style="width:100%;resize:none;"></textarea>
                     </div>
@@ -56,12 +59,9 @@
                 </form>
             </div>
         </article>
-
-        <hr class="uk-article-divider">
+        <hr/>
     {% endif %}
-
         <h3>最新评论</h3>
-
         <ul class="uk-comment-list">
             {% for comment in comments %}
             <li>
@@ -80,23 +80,8 @@
             <p>还没有人评论...</p>
             {% endfor %}
         </ul>
-
     </div>
+    <a id="newer" class="blog-nav">&lt;&nbsp;NEWER</a>
+    <a id="older" class="blog-nav">OLDER&nbsp;&gt;</a>
 
-    <div class="uk-width-medium-1-4">
-        <div class="uk-panel uk-panel-box">
-            <div class="uk-text-center">
-                <img class="uk-border-circle" width="120" height="120" src="{{ blog.user_image }}">
-                <h3>{{ blog.user_name }}</h3>
-            </div>
-        </div>
-        <div class="uk-panel uk-panel-header">
-            <h3 class="uk-panel-title">友情链接</h3>
-            <ul class="uk-list uk-list-line">
-                <li><i class="uk-icon-link"></i> <a href="#">编程</a></li>
-                <li><i class="uk-icon-link"></i> <a href="#">思考</a></li>
-                <li><i class="uk-icon-link"></i> <a href="#">读书</a></li>
-            </ul>
-        </div>
-    </div>
 {% endblock %}

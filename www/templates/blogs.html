@@ -14,11 +14,11 @@
         <p class='blogCreate_at'>
           {{blog.created_at|datetime}}
           <a class='blogSummary' href="/blog/{{ blog.id }}">
-            {{ blog.name }}{{ blog.summary }}
+            {{ blog.name }}
           </a> 
         </p>   
       </h2>
-      <hr class="uk-article-divider">
+      <hr>
     {% endfor %}
   </div>
 {% endblock %}

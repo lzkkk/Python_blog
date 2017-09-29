@@ -47,7 +47,6 @@
 			$('#loading').hide();
 			initVM({
 				name:'',
-				summary:'',
 				content:''
 			});
 		}
@@ -84,12 +83,6 @@
                 <label class="uk-form-label">标题:</label>
                 <div class="uk-form-controls">
                     <input v-model="name" name="name" type="text" placeholder="标题" class="uk-width-1-1">
-                </div>
-            </div>
-            <div class="uk-form-row">
-                <label class="uk-form-label">摘要:</label>
-                <div class="uk-form-controls">
-                    <textarea v-model="summary" rows="4" name="summary" placeholder="摘要" class="uk-width-1-1" style="resize:none;"></textarea>
                 </div>
             </div>
             <div class="uk-form-row">
