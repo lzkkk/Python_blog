@@ -73,12 +73,6 @@ async def cookie2user(cookie_str):
         logging.exception(e)
         return None
 
-@get('/register')
-def register():
-    return {
-        '__template__': 'register.html'
-    }
-
 @get('/signin')
 def signin():
     return {
@@ -129,7 +123,7 @@ def manage():
 @get('/manage/comments')
 def manage_comments(*,page='1'):
     return {
-        '__template__':'manage_commnets/html',
+        '__template__':'manage_comments.html',
         'page_index':get_page_index(page)
     }
 
@@ -148,13 +142,6 @@ def manage_edit_blog(*, id):
         'action': '/api/blogs/%s' % id
     }
 
-@get('/manage/users')
-def manage_users(*, page='1'):
-    return {
-        '__template__' : 'manage_users.html',
-        'page_index': get_page_index(page)
-    }
-
 @get('/api/users')
 async def api_get_users(*, page='1'):
     page_index = get_page_index(page)
@@ -170,6 +157,7 @@ async def api_get_users(*, page='1'):
 
 _RE_EMAIL = re.compile(r'^[a-z0-9\.\-\_]+\@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+){1,4}$')
 _RE_SHA1 = re.compile(r'^[0-9a-f]{40}$')
+
 ########
 #登入
 ########
@@ -223,7 +211,7 @@ async def api_comments(*, page = '1'):
 #评论
 ########
 @post ('/api/blogs/{id}/comments')
-async def api_create_comment(id, request, *, content, email, nickname):
+async def api_create_comment(id, request, *, content, email='475586149@qq.com', nickname='lzkkkk'):
     if not content or not content.strip():
         raise APIValueError('content')
     if not email or not email.strip():
@@ -233,7 +221,7 @@ async def api_create_comment(id, request, *, content, email, nickname):
     blog = await Blog.find(id)
     if blog is None:
         raise APIResourceNotFoundError('Blog')
-    comment = Comment(blog_id = blog.id, nickname = nickname.strip(), email = email.strip(), content = content.strip())
+    comment = Comment(blog_id = blog.id, reply_id='1',nickname = nickname.strip(), email = email.strip(), content = content.strip())
     await comment.save()
     logging.info('comment be save')
     return comment

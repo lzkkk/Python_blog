@@ -4,24 +4,24 @@
 
 {% block beforehead %}
 	<script>
-		var comment_url = '/api/blogs/{{ blog.id }}/comments';
+        var comment_url = '/api/blogs/{{ blog.id }}/comments';
 		$(function () {
     		var $form = $('#form-comment');
-    		$form.submit(function (e) {
-        		e.preventDefault();
-        		$form.showFormError('');
-        		var content = $form.find('textarea').val().trim();
-        		if (content==='') {
-            		return $form.showFormError('请输入评论内容！');
-        		}
-        		$form.postJSON(comment_url, { content: content }, function (err, result) {
-            		if (err) {
-                		return $form.showFormError(err);
-            		}
-					refresh();
-        		});
-    		});
-		});
+            $form.submit(function (e) {
+                e.preventDefault();
+                $form.showFormError('');
+                var content = $form.find('textarea').val().trim();
+                if (content==='') {
+                    return $form.showFormError('请输入评论内容！');
+                }
+                $form.postJSON(comment_url, { content: content }, function (err, result) {
+                    if (err) {
+                        return $form.showFormError(err);
+                    }
+                    refresh();
+                });
+            });
+	   });
 	</script>
 
 {% endblock %}
@@ -33,7 +33,6 @@
         <p>{{ blog.html_content|safe }}</p>
         <div class="content" v-html="post.content"> </div>
         <hr/>
-    {% if __user__ %}
         <h3>发表评论</h3>
         <article class="uk-comment">
             <header class="uk-comment-header">
@@ -44,12 +43,12 @@
                 <form id="form-comment" class="uk-form">
 
                     <div class="uk-alert uk-alert-danger uk-hidden"></div>
-                    <div class="uk-form-row">
+<!--                     <div class="uk-form-row">
                         <textarea rows="1" placeholder="昵称" style="width:100%;resize:none;"></textarea>
                     </div>
                     <div class="uk-form-row">
                         <textarea rows="1" placeholder="邮箱" style="width:100%;resize:none;"></textarea>
-                    </div>
+                    </div> -->
                     <div class="uk-form-row">
                         <textarea rows="6" placeholder="说点什么吧" style="width:100%;resize:none;"></textarea>
                     </div>
@@ -60,7 +59,6 @@
             </div>
         </article>
         <hr/>
-    {% endif %}
         <h3>最新评论</h3>
         <ul class="uk-comment-list">
             {% for comment in comments %}
