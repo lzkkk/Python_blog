@@ -59,8 +59,8 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#login2">登录</a></li>
-                <li><a href="#home">主页</a></li>
+                <li><a href="/signin">登录</a></li>
+                <li><a href="/">主页</a></li>
                 <li><a href="#favorite">收藏</a></li>
                 <li><a href="#download">喜欢壁纸</a></li>
             </ul>
@@ -68,12 +68,6 @@
     </header>
 
     <div id='main'>
-        <article id="login2">
-        </article>
-
-        <article id="home">
-        </article>
-
         <article id="favorite">
         </article>
 
@@ -104,66 +98,19 @@
 
 <script>
     $(document).ready(function(){
-
         function display(id){   
             var traget=document.getElementById(id);   
             traget.style.display="";       
         } 
-
-
-        function login(){
-            
-            document.getElementById("login2").disabled = true;
-            $.ajax({
-                type:"POST",
-                url:"/auth/login",
-                dataType:"json",
-                data:{
-                    email: $("#email2").val(),
-                    passwd: $("#passwd").val(),
-                    remember_me: $("#remember_me:checked").val()                },
-                success:function(data){
-                    if(data.ret == 1){
-                        $("#result").modal();
-                        $("#msg").html(data.msg);
-                        window.setTimeout("location.href='/user'", 1800);
-                    }else{
-            $("#result").modal();
-                        $("#msg").html(data.msg);
-            document.getElementById("login2").disabled = false;
-                                }
-                },
-                error:function(jqXHR){
-            $("#msg-error").hide(10);
-            $("#msg-error").show(100);
-            $("#msg-error-p").html("发生错误："+jqXHR.status);
-                    document.getElementById("login2").disabled = false;
-                            }
-            });
-
-        }
         $("html").keydown(function(event){
             if(event.keyCode==13){
                 login();
                 display("msgd");
             }
         });
-
-        $("#reset").click(function(){
-            reset();
-            display("resetmsg2");
-
-        });
-        $("#login").click(function(){
-            login();
-            display("msgd");
-
-        });
-
         $('div.modal').on('shown.bs.modal', function() {
             $("div.gt_slider_knob").hide();
         });
-
         $('div.modal').on('hidden.bs.modal', function() {
             $("div.gt_slider_knob").show();
         });

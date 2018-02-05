@@ -108,10 +108,16 @@ async def get_blog(id):
         'comments': comments
     }
 
-@get('/hatManage')
+@get('/manage_user')
 def hatManager():
     return {
-        '__template__': 'hat_manage.html'
+        '__template__': 'manage_user.html'
+    }
+
+@get('/manage_admin')
+def hatManager():
+    return {
+        '__template__': 'manage_admin.html'
     }
 
 @get('/manage/blogs/create')

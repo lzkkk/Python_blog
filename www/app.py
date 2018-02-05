@@ -59,9 +59,19 @@ def auth_factory(app, handler):
             if user:
                 logging.info('set current user: %s' % user.email)
                 request.__user__ = user
+
         if request.path.startswith('/manage/') and (request.__user__ is None or not request.__user__.admin):
             return web.HTTPFound('/signin')
+
+        elif request.path.startswith('/manage_admin') and (request.__user__ is None or not request.__user__.admin):
+            return web.HTTPFound('/signin')
+
+        elif request.path.startswith('/manage_user') and (request.__user__ and request.__user__.admin):
+            return web.HTTPFound('/manage_admin')
+            
+        logging.info(request.method)
         return (yield from handler(request))
+
     return auth
 
 async def data_factory(app, handler):

@@ -45,6 +45,7 @@ width: 50%;
 
 .blogSummary {
 margin-left: 20px;
+align-items:center;
 font: 24px "宋体", Arial, Helvetica, sans-serif;
 color: rgb(52,52,52);
 width: 72%
@@ -52,7 +53,7 @@ width: 72%
 
 .blogCreate_at {
 display:flex;
-margin-top: 20px;
+align-items:center;
 font: 14px "Montserrat", "Helvetica Neue", "Hiragino Sans GB", "LiHei Pro", Arial, sans-serif;
 color: rgb(135,135,135);
 }
