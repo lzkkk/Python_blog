@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <title>草帽小子</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="/static/css/_main.css?v=3.0">
-    <noscript><link rel="stylesheet" href="/static/css/noscript.css?v=3.0" /></noscript>
+    <link rel="stylesheet" href="/static/css/main.css-v=3.0.css">
+    <noscript><link rel="stylesheet" href="/static/css/noscript.css-v=3.0.css" /></noscript>
     <style> 
         #bg:after {
             -moz-transform: scale(1.125);
@@ -28,6 +28,14 @@
     <script src="/static/js/uikit.min.js"></script>
     <script src="/static/js/vue.min.js"></script>
     <script src="/static/js/awesome.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/skel.min.js"></script>
+    <script src="/static/js/util.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/jquery.min-1.js"></script>
+    <script src="/static/js/gt.js"></script>    
+    <script src="/static/js/base.min.js"></script>
+    <script src="/static/js/project.min.js"></script>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
@@ -92,3 +100,72 @@
     
 </body>
 </html>
+
+
+<script>
+    $(document).ready(function(){
+
+        function display(id){   
+            var traget=document.getElementById(id);   
+            traget.style.display="";       
+        } 
+
+
+        function login(){
+            
+            document.getElementById("login2").disabled = true;
+            $.ajax({
+                type:"POST",
+                url:"/auth/login",
+                dataType:"json",
+                data:{
+                    email: $("#email2").val(),
+                    passwd: $("#passwd").val(),
+                    remember_me: $("#remember_me:checked").val()                },
+                success:function(data){
+                    if(data.ret == 1){
+                        $("#result").modal();
+                        $("#msg").html(data.msg);
+                        window.setTimeout("location.href='/user'", 1800);
+                    }else{
+            $("#result").modal();
+                        $("#msg").html(data.msg);
+            document.getElementById("login2").disabled = false;
+                                }
+                },
+                error:function(jqXHR){
+            $("#msg-error").hide(10);
+            $("#msg-error").show(100);
+            $("#msg-error-p").html("发生错误："+jqXHR.status);
+                    document.getElementById("login2").disabled = false;
+                            }
+            });
+
+        }
+        $("html").keydown(function(event){
+            if(event.keyCode==13){
+                login();
+                display("msgd");
+            }
+        });
+
+        $("#reset").click(function(){
+            reset();
+            display("resetmsg2");
+
+        });
+        $("#login").click(function(){
+            login();
+            display("msgd");
+
+        });
+
+        $('div.modal').on('shown.bs.modal', function() {
+            $("div.gt_slider_knob").hide();
+        });
+
+        $('div.modal').on('hidden.bs.modal', function() {
+            $("div.gt_slider_knob").show();
+        });
+    })
+</script>
