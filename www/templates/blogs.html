@@ -10,15 +10,13 @@
 {% block content %}
   <div class="blogList">
     {% for blog in blogs %}
-      <h2>
-        <p class='blogCreate_at'>
-          {{blog.created_at|datetime}}
-          <a class='blogSummary' href="/blog/{{ blog.id }}">
+      <p class='blogCreate_at'>
+        {{blog.created_at|datetime}}
+        <a class='blogSummary' href="/blog/{{ blog.id }}">
             {{ blog.name }}
-          </a> 
-        </p>   
-      </h2>
-      <hr>
+        </a>
+      </p>
+    <hr>
     {% endfor %}
   </div>
 {% endblock %}

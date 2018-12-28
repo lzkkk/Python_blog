@@ -32,6 +32,16 @@ display:flex;
 justify-content:center;
 }
 
+.header {
+  letter-spacing: 5px;
+  margin: 50px auto 15px;
+  text-align: center;
+}
+.header a {
+  font-size: 15px;
+  color: #444;
+}
+
 .backgroudColor {
 background: #fff
 }
@@ -44,18 +54,19 @@ width: 50%;
 }
 
 .blogSummary {
-margin-left: 20px;
+margin-left: 60px;
 align-items:center;
-font: 24px "宋体", Arial, Helvetica, sans-serif;
-color: rgb(52,52,52);
-width: 72%
+letter-spacing: 1px;
+/*margin: 0;
+text-transform: uppercase;
+font: 14px "Montserrat", "Helvetica Neue", "Hiragino Sans GB", "LiHei Pro", Arial, sans-serif;*/
 }
 
 .blogCreate_at {
 display:flex;
-align-items:center;
+align-items: center;
 font: 14px "Montserrat", "Helvetica Neue", "Hiragino Sans GB", "LiHei Pro", Arial, sans-serif;
-color: rgb(135,135,135);
+color: rgb(135,135,135)
 }
 
 .post {
