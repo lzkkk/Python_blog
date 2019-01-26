@@ -3,20 +3,21 @@
 {% block title %} 日志 {% endblock %}
 
 {% block beforehead %}
-	<script>
-	</script>
+<script>
+</script>
 {% endblock %}
 
 {% block content %}
-  <div class="blogList">
-    {% for blog in blogs %}
-      <p class='blogCreate_at'>
-        {{blog.created_at|datetime}}
-        <a class='blogSummary' href="/blog/{{ blog.id }}">
-            {{ blog.name }}
-        </a>
-      </p>
+<div class="blogList">
+  {% for blog in blogs %}
+    <p class="blogCreate_at">
+      {{blog.created_at|datetime}}
+    
+    </p>
+    <a class='blogSummary' href="/blog/{{ blog.id }}">
+      {{ blog.name }}
+    </a> 
     <hr>
     {% endfor %}
   </div>
-{% endblock %}
+  {% endblock %}
